@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -61,8 +60,8 @@ for epoch in range(epochs):
     epoch += 1
     # Convert numpy array to torch Variable
 
-        inputs = Variable(torch.from_numpy(x_train))
-        labels = Variable(torch.from_numpy(y_train))
+    inputs = Variable(torch.from_numpy(x_train))
+    labels = Variable(torch.from_numpy(y_train))
 
     # Clear gradients w.r.t. parameters
     optimizer.zero_grad()
