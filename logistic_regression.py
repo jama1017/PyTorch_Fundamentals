@@ -38,7 +38,7 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           shuffle=False)
 
 '''
-STEP 3: Create Model Class
+STEP 3: Create Model class
 '''
 class LogisticRegressionModel(nn.Module):
     def __init__(self, input_dim, output_dim):
@@ -48,3 +48,11 @@ class LogisticRegressionModel(nn.Module):
     def forward(self, x):
         out = self.linear(x)
         return out
+
+'''
+STEP 4: Instantiate Model class
+'''
+input_dim = 28*28
+output_dim = 10
+
+model = LogisticRegressionModel(input_dim, output_dim)
