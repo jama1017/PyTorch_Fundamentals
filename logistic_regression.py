@@ -100,10 +100,11 @@ for epoch in range(num_epochs):
             # Calculate Accuracy
             correct = 0
             total = 0
+
             # Iterate through test dataset
             for images, labels in test_loader:
                 #Load images to a Torch Variable
-                images = Variable(images.view(-1, 28*28)
+                images = Variable(images.view(-1, 28*28))
 
                 # Forward pass only to get logits/output
                 outputs = model(images)
