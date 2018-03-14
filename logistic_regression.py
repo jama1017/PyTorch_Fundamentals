@@ -56,3 +56,15 @@ input_dim = 28*28
 output_dim = 10
 
 model = LogisticRegressionModel(input_dim, output_dim)
+
+'''
+STEP 5: Instantiate Loss class
+'''
+criterion = nn.CrossEntropyLoss()
+
+'''
+STEP 6: Instantiate Optimizer class
+'''
+learning_rate = 0.001
+
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
