@@ -149,10 +149,8 @@ for epoch in range(num_epochs):
             total = 0
             # Iterate through test dataset
             for images, labels in test_loader:
-                #######################
-                #  USE GPU FOR MODEL  #
-                #######################
-                images = Variable(images.view(-1, 28*28).cuda())
+
+                images = Variable(images.view(-1, 28*28))
 
                 # Forward pass only to get logits/output
                 outputs = model(images)
@@ -163,11 +161,8 @@ for epoch in range(num_epochs):
                 # Total number of labels
                 total += labels.size(0)
 
-                #######################
-                #  USE GPU FOR MODEL  #
-                #######################
                 # Total correct predictions
-                correct += (predicted.cpu() == labels.cpu()).sum()
+                correct += (predicted == labels).sum()
 
             accuracy = 100 * correct / total
 
