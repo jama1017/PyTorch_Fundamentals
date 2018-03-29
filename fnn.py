@@ -108,3 +108,68 @@ STEP 6: INSTANTIATE OPTIMIZER CLASS
 learning_rate = 0.1
 
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+
+'''
+STEP 7: TRAIN THE MODEL
+'''
+iter = 0
+for epoch in range(num_epochs):
+    for i, (images, labels) in enumerate(train_loader):
+
+        #######################
+        #  USE GPU FOR MODEL  #
+        #######################
+        if torch.cuda.is_available():
+            images = Variable(images.view(-1, 28*28).cuda())
+            labels = Variable(labels.cuda())
+        else:
+            images = Variable(images.view(-1, 28*28))
+            labels = Variable(labels)
+
+        # Clear gradients w.r.t. parameters
+        optimizer.zero_grad()
+
+        # Forward pass to get output/logits
+        outputs = model(images)
+
+        # Calculate Loss: softmax --> cross entropy loss
+        loss = criterion(outputs, labels)
+
+        # Getting gradients w.r.t. parameters
+        loss.backward()
+
+        # Updating parameters
+        optimizer.step()
+
+        iter += 1
+
+        if iter % 500 == 0:
+            # Calculate Accuracy
+            correct = 0
+            total = 0
+            # Iterate through test dataset
+            for images, labels in test_loader:
+                #######################
+                #  USE GPU FOR MODEL  #
+                #######################
+                images = Variable(images.view(-1, 28*28).cuda())
+
+                # Forward pass only to get logits/output
+                outputs = model(images)
+
+                # Get predictions from the maximum value
+                _, predicted = torch.max(outputs.data, 1)
+
+                # Total number of labels
+                total += labels.size(0)
+
+                #######################
+                #  USE GPU FOR MODEL  #
+                #######################
+                # Total correct predictions
+                correct += (predicted.cpu() == labels.cpu()).sum()
+
+            accuracy = 100 * correct / total
+
+            # Print Loss
+            print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.data[0], accuracy))
