@@ -79,3 +79,32 @@ class FeedforwardNeuralNetModel(nn.Module):
         # Linear function 4 (readout)
         out = self.fc4(out)
         return out
+
+'''
+STEP 4: INSTANTIATE MODEL CLASS
+'''
+input_dim = 28*28
+hidden_dim = 100
+output_dim = 10
+
+model = FeedforwardNeuralNetModel(input_dim, hidden_dim, output_dim)
+
+#######################
+#  USE GPU FOR MODEL  #
+#######################
+
+if torch.cuda.is_available():
+    model.cuda()
+
+'''
+STEP 5: INSTANTIATE LOSS CLASS
+'''
+criterion = nn.CrossEntropyLoss()
+
+
+'''
+STEP 6: INSTANTIATE OPTIMIZER CLASS
+'''
+learning_rate = 0.1
+
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
