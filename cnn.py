@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
@@ -40,7 +42,7 @@ STEP 3: CREATE MODEL CLASS
 class CNNModel(nn.Module):
     def __init__(self):
         super(CNNModel, self).__init__()
-        
+
         # Convolution 1
         self.cnn1 = nn.Conv2d(in_channels=1, out_channels=16, kernel_size=5, stride=1, padding=0)
         self.relu1 = nn.ReLU()
@@ -83,3 +85,29 @@ class CNNModel(nn.Module):
         out = self.fc1(out)
 
         return out
+
+'''
+STEP 4: INSTANTIATE MODEL CLASS
+'''
+
+model = CNNModel()
+
+#######################
+#  USE GPU FOR MODEL  #
+#######################
+
+if torch.cuda.is_available():
+    model.cuda()
+
+'''
+STEP 5: INSTANTIATE LOSS CLASS
+'''
+criterion = nn.CrossEntropyLoss()
+
+
+'''
+STEP 6: INSTANTIATE OPTIMIZER CLASS
+'''
+learning_rate = 0.01
+
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
